@@ -6,6 +6,7 @@
         <option value="$PROJECT_DIR$/gdth-eureka-server/pom.xml" />
         <option value="$PROJECT_DIR$/gdth-eureka-provider-xtgn/pom.xml" />
         <option value="$PROJECT_DIR$/gdth-eureka-comsumer-web/pom.xml" />
+        <option value="$PROJECT_DIR$/gdth-eureka-provider-demo/pom.xml" />
       </list>
     </option>
   </component>

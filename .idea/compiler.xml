@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="gdth-eureka-comsumer-web" />
+        <module name="gdth-eureka-provider-demo" />
         <module name="gdth-eureka-provider-xtgn" />
         <module name="gdth-eureka-server" />
       </profile>
@@ -14,6 +15,7 @@
     <bytecodeTargetLevel>
       <module name="gdth-eureka-api" target="1.8" />
       <module name="gdth-eureka-comsumer-web" target="1.8" />
+      <module name="gdth-eureka-provider-demo" target="1.8" />
       <module name="gdth-eureka-provider-xtgn" target="1.8" />
       <module name="gdth-eureka-server" target="1.8" />
     </bytecodeTargetLevel>

@@ -5,13 +5,13 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.4.RELEASE</version>
+        <version>2.1.5.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>gdth-eureka-provider-xtgn</artifactId>
+    <artifactId>gdth-eureka-provider-demo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>gdth-eureka-provider-xtgn</name>
+    <name>gdth-eureka-provider-demo</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -57,6 +57,12 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.1.5</version>
+        </dependency>
+
     </dependencies>
 
     <dependencyManagement>
@@ -79,4 +85,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>
