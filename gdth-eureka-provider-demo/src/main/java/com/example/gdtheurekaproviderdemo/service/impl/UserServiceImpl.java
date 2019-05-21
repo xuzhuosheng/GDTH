@@ -19,8 +19,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getData() {
-        List<User> userList = new ArrayList<>();
-        userList = userDao.getData();
+        List<User> userList = userDao.getData();
         return userList;
     }
 }

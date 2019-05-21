@@ -26,4 +26,21 @@ public class UserController {
         }
         return userList.get(0).getAccount();
     }
+
+
+    @RequestMapping("/getAccount")
+    public String getAccount() {
+        List<User> userList = new ArrayList<>();
+        System.out.println("this is demo ");
+        String name = "";
+
+        try {
+            userList = userService.getData();
+            name = userList.get(0).getAccount();
+            System.out.println(name);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return name;
+    }
 }
