@@ -33,24 +33,17 @@
 
         //JSON.stringify()
         function submitForm() {
-            var formData = $("#form").serializeArray();
-            var param = form2json(formData);
-            $.ajax(
-                {
-                    url: 'doLogin',
-                    type: 'post',
-                    contentType: 'application/json;charset=utf-8',
-                    dataType: 'json',
-                    data: JSON.stringify(param),
-                    success: function (data) {
-                        alert("success");
-                    },
-                    error: function () {
-                        alert("error");
-                    }
+            var username = $("#username").val();
+            var password = $("#password").val();
 
-                }
-            )
+            if (username != "" && password != "") {
+                var form = $("#form");
+                form.submit();
+
+            } else {
+                alert("请输入用户名和密码！");
+                return;
+            }
 
 
         }
@@ -74,7 +67,7 @@
     <div class="login_boder">
 
         <div class="login_padding" id="login_model">
-            <!--<form id="form" method="post">
+            <form id="form" method="post" action="/doLogin2">
                 <h2>用户名</h2>
                 <label>
                     <input type="text" id="username" name="username" class="txt_input txt_input2"
@@ -82,7 +75,7 @@
                 </label>
                 <h2>密码</h2>
                 <label>
-                    <input type="password" name="password" id="userpwd" class="txt_input" placeholder="请输入密码">
+                    <input type="password" name="password" id="password" class="txt_input" placeholder="请输入密码">
                 </label>
 
 
@@ -93,30 +86,6 @@
                     <label>
                         <input type="button" class="sub_button" name="button" id="button" value="登 录"
                                style="opacity: 0.7;" onclick="submitForm()">
-                    </label>
-                </div>
-            </form>-->
-
-
-            <form id="form" method="post" action="/doLogin2">
-                <h2>用户名</h2>
-                <label>
-                    <input type="text" id="username" name="username" class="txt_input txt_input2"
-                           placeholder="请输入用户名">
-                </label>
-                <h2>密码</h2>
-                <label>
-                    <input type="password" name="password" id="userpwd" class="txt_input" placeholder="请输入密码">
-                </label>
-
-
-                <p class="forgot"><a id="iforget" href="#" onclick="forgetPassword()">忘记密码?</a></p>
-                <div class="rem_sub">
-                    <div class="rem_sub_l">
-                    </div>
-                    <label>
-                        <input type="submit" class="sub_button" name="button" id="button" value="登 录"
-                               style="opacity: 0.7;">
                     </label>
                 </div>
             </form>

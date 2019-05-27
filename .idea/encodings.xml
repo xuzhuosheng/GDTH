@@ -4,6 +4,7 @@
     <file url="file://$PROJECT_DIR$/gdth-eureka-comsumer-demo" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gdth-eureka-comsumer-web" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gdth-eureka-provider-demo" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gdth-eureka-provider-util" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gdth-eureka-provider-xtgn" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gdth-eureka-server" charset="UTF-8" />
   </component>

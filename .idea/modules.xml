@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/gdth-eureka-comsumer-demo/gdth-eureka-comsumer-demo.iml" filepath="$PROJECT_DIR$/gdth-eureka-comsumer-demo/gdth-eureka-comsumer-demo.iml" />
       <module fileurl="file://$PROJECT_DIR$/gdth-eureka-comsumer-web/gdth-eureka-comsumer-web.iml" filepath="$PROJECT_DIR$/gdth-eureka-comsumer-web/gdth-eureka-comsumer-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/gdth-eureka-provider-demo/gdth-eureka-provider-demo.iml" filepath="$PROJECT_DIR$/gdth-eureka-provider-demo/gdth-eureka-provider-demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gdth-eureka-provider-util/gdth-eureka-provider-util.iml" filepath="$PROJECT_DIR$/gdth-eureka-provider-util/gdth-eureka-provider-util.iml" />
       <module fileurl="file://$PROJECT_DIR$/gdth-eureka-provider-xtgn/gdth-eureka-provider-xtgn.iml" filepath="$PROJECT_DIR$/gdth-eureka-provider-xtgn/gdth-eureka-provider-xtgn.iml" />
       <module fileurl="file://$PROJECT_DIR$/gdth-eureka-server/gdth-eureka-server.iml" filepath="$PROJECT_DIR$/gdth-eureka-server/gdth-eureka-server.iml" />
     </modules>

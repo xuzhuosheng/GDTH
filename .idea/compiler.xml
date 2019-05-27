@@ -9,6 +9,7 @@
         <module name="gdth-eureka-comsumer-demo" />
         <module name="gdth-eureka-comsumer-web" />
         <module name="gdth-eureka-provider-demo" />
+        <module name="gdth-eureka-provider-util" />
         <module name="gdth-eureka-provider-xtgn" />
         <module name="gdth-eureka-server" />
       </profile>
@@ -18,6 +19,7 @@
       <module name="gdth-eureka-comsumer-demo" target="1.8" />
       <module name="gdth-eureka-comsumer-web" target="1.8" />
       <module name="gdth-eureka-provider-demo" target="1.8" />
+      <module name="gdth-eureka-provider-util" target="1.8" />
       <module name="gdth-eureka-provider-xtgn" target="1.8" />
       <module name="gdth-eureka-server" target="1.8" />
     </bytecodeTargetLevel>

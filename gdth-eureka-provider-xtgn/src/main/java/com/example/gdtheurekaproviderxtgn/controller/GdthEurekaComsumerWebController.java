@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 public class GdthEurekaComsumerWebController {
 
@@ -14,15 +17,21 @@ public class GdthEurekaComsumerWebController {
     UserService userService;
 
     @RequestMapping("/getUserData")
-    public User getUserData(String username, String password) throws Exception {
+    public Map<String, Object> getUserData(String username, String password) {
         System.out.println(username + "---" + password);
-        User user = new User();
+        Map<String, Object> map = new HashMap<>();
+        User user;
         try {
             user = userService.getUserData(username, password);
+            map.put("user", user);
+            map.put("flag", "success");
+
         } catch (Exception e) {
             e.printStackTrace();
+            map.put("flag", "error");
+            map.put("errorMsg", "数据库访问出错！");
         }
-        return user;
+        return map;
     }
 
 

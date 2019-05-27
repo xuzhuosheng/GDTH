@@ -8,6 +8,7 @@
         <option value="$PROJECT_DIR$/gdth-eureka-comsumer-web/pom.xml" />
         <option value="$PROJECT_DIR$/gdth-eureka-provider-demo/pom.xml" />
         <option value="$PROJECT_DIR$/gdth-eureka-comsumer-demo/pom.xml" />
+        <option value="$PROJECT_DIR$/gdth-eureka-provider-util/pom.xml" />
       </list>
     </option>
   </component>
