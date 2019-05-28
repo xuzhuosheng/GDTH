@@ -1,10 +1,12 @@
 package com.example.gdtheurekaproviderutil.controller;
 
 
+import net.sf.json.JSONObject;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -86,4 +88,24 @@ public class UtilController {
     }
 
 
+    @RequestMapping("/toOneParam")
+    public void toOneParam(String name) {
+        System.out.println(name);
+    }
+
+    @RequestMapping("/toTwoParam")
+    public void toTwoParam(String name, int age) {
+        System.out.println(name + "---" + age);
+    }
+
+
+    @RequestMapping("/toList")
+    public void toList(@RequestBody JSONObject jsonObject) {
+        System.out.println("util-toList");
+        List<String> list = (List<String>) jsonObject.get("title");
+
+        for (int i = 0, length = list.size(); i < length; i++) {
+            System.out.println(list.get(i));
+        }
+    }
 }

@@ -110,23 +110,7 @@ public class LoginController {
 
     @RequestMapping("/toWelcome")
     public ModelAndView toWelcome(HttpServletResponse response) {
-        List<String> title = new ArrayList<>();
-        title.add("姓名");
-        title.add("性别");
-        title.add("年龄");
-        List<String> data1 = new ArrayList<>();
-        data1.add("吴彦祖");
-        data1.add("男");
-        data1.add("30");
-        List<String> data2 = new ArrayList<>();
-        data2.add("古天乐");
-        data2.add("男");
-        data2.add("31");
-        List<List<String>> data = new ArrayList<>();
-        data.add(data1);
-        data.add(data2);
 
-        providerUtilService.exportExcel(title, data, response);
         view = new ModelAndView();
         view.setViewName("welcome");
         return view;
