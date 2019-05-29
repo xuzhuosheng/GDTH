@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -22,13 +22,82 @@ public class UtilController {
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy年MM月dd日");
 
 
-    @RequestMapping("/expExcel")
-    public void expExcel(List<String> titleList, List<List<String>> dataList, HttpServletResponse response) {
+//    @RequestMapping("/expExcel")
+//    public void expExcel(@RequestBody JSONObject jsonObject, HttpServletResponse response) {
+//        System.out.println("expExcel");
+//
+//        List<String> titleList = (List<String>) jsonObject.get("title");
+//        List<List<String>> dataList = (List<List<String>>) jsonObject.get("data");
+//
+//        HSSFWorkbook workbook = new HSSFWorkbook();
+//        HSSFSheet sheet = workbook.createSheet();
+//
+//
+//        HSSFRow row;
+//        HSSFCell cell;
+//        if (titleList.size() > 0) {
+//            row = sheet.createRow(0);
+//            for (int i = 0, length = titleList.size();
+//                 i < length;
+//                 i++) {
+//                cell = row.createCell(i);
+//                cell.setCellValue(titleList.get(i));
+//            }
+//        }
+//
+//
+////        HSSFRow dataRow;
+//        if (dataList.size() > 0) {
+//            for (int k = 0, leng = dataList.size(); k < leng; k++) {
+//
+//                row = sheet.createRow(k + 1);
+//                for (int j = 0, lengj = dataList.get(k).size(); j < lengj; j++) {
+//                    cell = row.createCell(j);
+//                    cell.setCellValue(dataList.get(k).get(j));
+//                }
+//
+//            }
+//        }
+//
+//        //导出
+//        try {
+//
+//            String fileName = "TEST_" + System.currentTimeMillis() + ".xls";
+//            ServletOutputStream outputStream = response.getOutputStream();
+//            response.reset();
+//            response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
+//            response.setContentType("application/octet-stream;charset=utf-8");
+//
+//            try {
+//                workbook.write(outputStream);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//
+//            outputStream.flush();
+//
+//            try {
+//                outputStream.close();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//
+//    }
 
-        System.out.println("expExcel");
+
+    @RequestMapping("/download")
+    public void download(HttpServletResponse response, @RequestBody JSONObject jsonObject) {
+        List<String> titleList = (List<String>) jsonObject.get("title");
+        List<List<String>> dataList = (List<List<String>>) jsonObject.get("data");
+
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet();
-
 
         HSSFRow row;
         HSSFCell cell;
@@ -42,8 +111,6 @@ public class UtilController {
             }
         }
 
-
-//        HSSFRow dataRow;
         if (dataList.size() > 0) {
             for (int k = 0, leng = dataList.size(); k < leng; k++) {
 
@@ -56,13 +123,11 @@ public class UtilController {
             }
         }
 
-        //导出
+//        导出
         try {
-
-            String fileName = "TEST_" + System.currentTimeMillis() + ".xls";
-            OutputStream outputStream = response.getOutputStream();
+            ServletOutputStream outputStream = response.getOutputStream();
             response.reset();
-            response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
+            response.setHeader("Content-Disposition", "attachment;");
             response.setContentType("application/octet-stream;charset=utf-8");
 
             try {
@@ -83,29 +148,6 @@ public class UtilController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
-
-    @RequestMapping("/toOneParam")
-    public void toOneParam(String name) {
-        System.out.println(name);
-    }
-
-    @RequestMapping("/toTwoParam")
-    public void toTwoParam(String name, int age) {
-        System.out.println(name + "---" + age);
-    }
-
-
-    @RequestMapping("/toList")
-    public void toList(@RequestBody JSONObject jsonObject) {
-        System.out.println("util-toList");
-        List<String> list = (List<String>) jsonObject.get("title");
-
-        for (int i = 0, length = list.size(); i < length; i++) {
-            System.out.println(list.get(i));
-        }
-    }
 }

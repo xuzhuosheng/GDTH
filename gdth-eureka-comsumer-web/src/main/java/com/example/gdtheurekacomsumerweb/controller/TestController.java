@@ -3,11 +3,14 @@ package com.example.gdtheurekacomsumerweb.controller;
 
 import com.example.gdtheurekacomsumerweb.service.ProviderUtilService;
 import com.example.gdtheurekacomsumerweb.service.TestService;
-import com.netflix.discovery.converters.Auto;
-import net.sf.json.JSON;
+import feign.Response;
 import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.mail.MailProperties;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,12 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-@Controller
+@RestController
 public class TestController {
 
 
@@ -49,7 +51,7 @@ public class TestController {
     }
 
     @RequestMapping("/doExcel")
-    public void doExcel(HttpServletResponse response) {
+    public void doExcel() {
         try {
             List<String> title = new ArrayList<>();
             title.add("姓名");
@@ -67,39 +69,69 @@ public class TestController {
             data.add(data1);
             data.add(data2);
 
-//            Map<String,List<List<String>>> listMap=new HashMap<>();
-//
-//            listMap.put("title",title);
-//            listMap.put("data",data);
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("title", title);
+            jsonObject.put("data", data);
 
-
-            providerUtilService.exportExcel(title, data, response);
+//            testService.exportExcel(jsonObject);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
 
-    @RequestMapping("/toOneParam")
-    public void toOneParam() {
-        providerUtilService.toOneParam("wuyanzu");
+    public void doExcelTest() {
+        List<String> title = new ArrayList<>();
+        title.add("姓名");
+        title.add("性别");
+        title.add("年龄");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("title", title);
+        testService.exportExcel(jsonObject);
+
     }
 
 
-    @RequestMapping("/toTwoParam")
-    public void toTwoParam() {
-        providerUtilService.toTwoParam("wuyanzu", 30);
-    }
+    @RequestMapping("/downloadFiles")
+    public ResponseEntity<byte[]> downloadFiles() {
 
-    @RequestMapping("/toList")
-    public void toList() {
+        List<String> title = new ArrayList<>();
+        title.add("aaa");
+        title.add("bbb");
+        title.add("ccc");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("title", title);
 
-        List<String> list = new ArrayList<>();
-        list.add("aaa");
-        list.add("bbb");
-        list.add("ccc");
-        JSONObject jsonObject=new JSONObject();
-        jsonObject.put("title",list);
-        providerUtilService.toList(jsonObject);
+
+        ResponseEntity<byte[]> entity = null;
+        InputStream inputStream = null;
+
+        String fileName = "test_" + System.currentTimeMillis() + ".xls";
+        try {
+
+            Response response = testService.download(jsonObject);
+            Response.Body body = response.body();
+            inputStream = body.asInputStream();
+            byte[] b = new byte[inputStream.available()];
+            inputStream.read(b);
+            HttpHeaders headers = new HttpHeaders();
+            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + fileName);
+            headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+
+            entity = new ResponseEntity<byte[]>(b, headers, HttpStatus.OK);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return entity;
+
     }
 }
