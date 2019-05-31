@@ -92,46 +92,46 @@ public class TestController {
     }
 
 
-    @RequestMapping("/downloadFiles")
-    public ResponseEntity<byte[]> downloadFiles() {
-
-        List<String> title = new ArrayList<>();
-        title.add("aaa");
-        title.add("bbb");
-        title.add("ccc");
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("title", title);
-
-
-        ResponseEntity<byte[]> entity = null;
-        InputStream inputStream = null;
-
-        String fileName = "test_" + System.currentTimeMillis() + ".xls";
-        try {
-
-            Response response = testService.download(jsonObject);
-            Response.Body body = response.body();
-            inputStream = body.asInputStream();
-            byte[] b = new byte[inputStream.available()];
-            inputStream.read(b);
-            HttpHeaders headers = new HttpHeaders();
-            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + fileName);
-            headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-
-            entity = new ResponseEntity<byte[]>(b, headers, HttpStatus.OK);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return entity;
-
-    }
+//    @RequestMapping("/downloadFiles")
+//    public ResponseEntity<byte[]> downloadFiles() {
+//
+//        List<String> title = new ArrayList<>();
+//        title.add("aaa");
+//        title.add("bbb");
+//        title.add("ccc");
+//        JSONObject jsonObject = new JSONObject();
+//        jsonObject.put("title", title);
+//
+//
+//        ResponseEntity<byte[]> entity = null;
+//        InputStream inputStream = null;
+//
+//        String fileName = "test_" + System.currentTimeMillis() + ".xls";
+//        try {
+//
+//            Response response = testService.download(jsonObject);
+//            Response.Body body = response.body();
+//            inputStream = body.asInputStream();
+//            byte[] b = new byte[inputStream.available()];
+//            inputStream.read(b);
+//            HttpHeaders headers = new HttpHeaders();
+//            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + fileName);
+//            headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+//
+//            entity = new ResponseEntity<byte[]>(b, headers, HttpStatus.OK);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            if (inputStream != null) {
+//                try {
+//                    inputStream.close();
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//        return entity;
+//
+//    }
 }

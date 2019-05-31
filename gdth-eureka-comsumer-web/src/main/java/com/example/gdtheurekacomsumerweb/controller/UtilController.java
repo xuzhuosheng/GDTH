@@ -9,13 +9,20 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+
+/**
+ * 工具类
+ * 对接ProviderUtilService
+ * 对应provider：gdth-eureka-provider-util
+ */
 
 @RestController
 public class UtilController {
@@ -25,9 +32,30 @@ public class UtilController {
     ProviderUtilService providerUtilService;
 
 
-    @RequestMapping("/downloadFiles")
+    /**
+     * 上传文件方法
+     *
+     * @param files
+     * @return
+     */
+    @RequestMapping(value = "/uploadFiles", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Object uploadFiles(@RequestPart(value = "files") MultipartFile[] files) {
+        System.out.println("this is uploadFiles function");
+//        System.out.println(files[0].getName());
+        Object o = providerUtilService.upload(files);
+        return o;
+    }
+
+
+    /**
+     * 下载文件调用方法
+     *
+     * @return
+     */
+    @RequestMapping(value = "/downloadFiles", method = RequestMethod.POST)
     public ResponseEntity<byte[]> downloadFiles() {
 
+//        测试
         List<String> title = new ArrayList<>();
         title.add("aaa");
         title.add("bbb");
