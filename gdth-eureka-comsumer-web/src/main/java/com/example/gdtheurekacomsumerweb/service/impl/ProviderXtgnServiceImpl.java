@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -23,5 +24,11 @@ public class ProviderXtgnServiceImpl implements ProviderXtgnService {
         map.put("flag", "hystrixError");
         map.put("errorMsg", "微服务调度错误，请联系管理员！");
         return map;
+    }
+
+    @Override
+    public List<Object> getAllUser() {
+        System.out.println("sb le");
+        return null;
     }
 }

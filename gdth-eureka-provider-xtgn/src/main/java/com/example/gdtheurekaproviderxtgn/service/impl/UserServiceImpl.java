@@ -6,6 +6,8 @@ import com.example.gdtheurekaproviderxtgn.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 @Repository("userService")
 public class UserServiceImpl implements UserService {
@@ -17,5 +19,11 @@ public class UserServiceImpl implements UserService {
     public User getUserData(String username, String password) {
         User user = userDao.getUserData(username, password);
         return user;
+    }
+
+    @Override
+    public List<Object> getAllUser() {
+        List<Object> dataList = userDao.getAllUsers();
+        return dataList;
     }
 }

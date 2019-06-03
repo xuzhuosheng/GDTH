@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @Controller
@@ -42,8 +43,6 @@ public class LoginController {
     }
 
 
-
-
     /**
      * 登录方法
      *
@@ -52,7 +51,7 @@ public class LoginController {
      * @return
      */
     @RequestMapping(value = "/doLogin2", method = RequestMethod.POST)
-    public ModelAndView doLogin2(HttpServletRequest request, ModelMap map) {
+    public ModelAndView doLogin2(HttpServletRequest request, ModelMap map, HttpSession session) {
 //        接收参数
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -73,11 +72,14 @@ public class LoginController {
                     //将Object对象转成User
                     JSONObject userJson = JSONObject.fromObject(dMap.get("user"));
                     User user = (User) JSONObject.toBean(userJson, User.class);
+
                     if (user == null) {
                         map.put("msg", "登录失败，请检查用户名和密码是否匹配！");
                     } else {
                         view.setViewName("index");
                         map.put("username", user.getAccount());
+                        map.put("user", user);
+                        session.setAttribute("user", user);
                         System.out.println("username:" + user.getTruename());
                     }
 

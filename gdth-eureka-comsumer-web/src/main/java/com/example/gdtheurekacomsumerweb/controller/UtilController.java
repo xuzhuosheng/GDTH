@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 /**
@@ -39,11 +41,39 @@ public class UtilController {
      * @return
      */
     @RequestMapping(value = "/uploadFiles", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Object uploadFiles(@RequestPart(value = "files") MultipartFile[] files) {
+    public void uploadFiles(@RequestParam(value = "files", required = false) MultipartFile[] files) {
         System.out.println("this is uploadFiles function");
-//        System.out.println(files[0].getName());
-        Object o = providerUtilService.upload(files);
-        return o;
+
+        try {
+
+            if (files.length > 0) {
+
+                String fileDirStr = "F:/xuzhuosheng/";
+                File fileDir = new File(fileDirStr);
+                if (!fileDir.isDirectory()) {
+                    fileDir.mkdir();
+                    System.out.println("create new file");
+                }
+                long time;
+                MultipartFile file;
+                File targetfile;
+                String fileName;
+                for (int i = 0, length = files.length; i < length; i++) {
+                    file = files[i];
+                    fileName = file.getOriginalFilename();
+                    time = System.currentTimeMillis();
+                    targetfile = new File(fileDirStr, time + "_" + fileName);
+                    file.transferTo(targetfile);
+                }
+            } else {
+                System.out.println("no files");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 
 

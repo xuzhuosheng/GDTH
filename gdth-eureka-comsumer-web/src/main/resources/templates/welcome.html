@@ -8,6 +8,7 @@
     <meta name="viewport"
           content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8"/>
     <!--[if lt IE 9]>
     <script type="text/javascript" th:src="@{hui/lib/html5shiv.js}"></script>
     <script type="text/javascript" th:src="@{hui/lib/respond.min.js}"></script>
@@ -26,7 +27,7 @@
 <body>
 
 <form action="uploadFiles" method="post" enctype="multipart/form-data">
-    <input type="file" name="files">
+    <input type="file" name="files" id="files">
     <input type="submit" value="提 交">
 </form>
 

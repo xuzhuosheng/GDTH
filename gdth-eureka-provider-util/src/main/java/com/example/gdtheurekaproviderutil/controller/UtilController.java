@@ -7,10 +7,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
@@ -27,13 +24,22 @@ public class UtilController {
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy年MM月dd日");
 
-    @RequestMapping(value = "/upload", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public void upload(@RequestPart MultipartFile[] files, HttpServletRequest request, HttpServletResponse response) {
 
+    /**
+     * 文件上传
+     *
+     * @param files
+     * @param request
+     * @param response
+     */
+    @RequestMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public void upload(@RequestPart(value = "files") MultipartFile[] files, HttpServletRequest request, HttpServletResponse response) {
+
+        System.out.println(files[0].getName());
 
         File dest = new File("F:/xuzhuosheng/");
 
-        try {
+      /*  try {
             if (files.length > 0) {
                 String contentType;
                 String name;
@@ -58,11 +64,16 @@ public class UtilController {
 
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
-
-    @RequestMapping("/download")
+    /**
+     * 文件下载
+     *
+     * @param response
+     * @param jsonObject
+     */
+    @RequestMapping(value = "/download", method = RequestMethod.POST)
     public void download(HttpServletResponse response, @RequestBody JSONObject jsonObject) {
         List<String> titleList = (List<String>) jsonObject.get("title");
         List<List<String>> dataList = (List<List<String>>) jsonObject.get("data");

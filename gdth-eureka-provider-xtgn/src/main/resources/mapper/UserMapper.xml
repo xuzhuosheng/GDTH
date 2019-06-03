@@ -12,5 +12,8 @@
         </where>
     </select>
 
+    <select id="getAllUsers" resultType="com.example.gdtheurekaproviderxtgn.entity.User">
+        select * from user
+    </select>
 
 </mapper>
