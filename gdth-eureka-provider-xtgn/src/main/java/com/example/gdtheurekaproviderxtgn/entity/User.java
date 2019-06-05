@@ -1,6 +1,7 @@
 package com.example.gdtheurekaproviderxtgn.entity;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 public class User implements Serializable {
 
@@ -11,18 +12,28 @@ public class User implements Serializable {
     private String password;
     private String sex;
     private String truename;
+    private String phone;
+    private String zt;
+    private Date createTime;
+    private Date modifyTime;
 
 
     public User() {
     }
 
-    public User(int id, String account, String email, String password, String sex, String truename) {
+
+
+    public User(int id, String account, String email, String password, String sex, String truename, String phone, String zt, Date createTime, Date modifyTime) {
         this.id = id;
         this.account = account;
         this.email = email;
         this.password = password;
         this.sex = sex;
         this.truename = truename;
+        this.phone = phone;
+        this.zt = zt;
+        this.createTime = createTime;
+        this.modifyTime = modifyTime;
     }
 
     public int getId() {
@@ -71,5 +82,37 @@ public class User implements Serializable {
 
     public void setTruename(String truename) {
         this.truename = truename;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getZt() {
+        return zt;
+    }
+
+    public void setZt(String zt) {
+        this.zt = zt;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getModifyTime() {
+        return modifyTime;
+    }
+
+    public void setModifyTime(Date modifyTime) {
+        this.modifyTime = modifyTime;
     }
 }

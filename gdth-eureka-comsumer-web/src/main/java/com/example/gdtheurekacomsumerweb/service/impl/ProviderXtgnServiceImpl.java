@@ -1,9 +1,11 @@
 package com.example.gdtheurekacomsumerweb.service.impl;
 
+import com.example.gdtheurekacomsumerweb.entity.User;
 import com.example.gdtheurekacomsumerweb.service.ProviderXtgnService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,17 +20,19 @@ public class ProviderXtgnServiceImpl implements ProviderXtgnService {
     }
 
     @Override
-    public Map<String, Object> getUserData(String username, String password) {
+    public User getUserData(String username, String password) {
         System.out.println("hystrix is working!");
-        Map<String, Object> map = new HashMap<>();
-        map.put("flag", "hystrixError");
-        map.put("errorMsg", "微服务调度错误，请联系管理员！");
-        return map;
+        User user = new User();
+        user.setAccount("error");
+        return user;
     }
 
     @Override
-    public List<Object> getAllUser() {
-        System.out.println("sb le");
-        return null;
+    public List<User> getAllUser() {
+        List<User> userList = new ArrayList<>();
+        User user = new User();
+        user.setAccount("error");
+        userList.add(user);
+        return userList;
     }
 }

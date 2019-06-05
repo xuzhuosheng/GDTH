@@ -12,5 +12,5 @@ import java.util.List;
 public interface UserDao {
     User getUserData(@Param("username") String username, @Param("password") String password);
 
-    List<Object> getAllUsers();
+    List<User> getAllUsers();
 }

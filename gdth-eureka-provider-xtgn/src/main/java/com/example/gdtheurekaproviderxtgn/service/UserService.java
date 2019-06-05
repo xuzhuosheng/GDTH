@@ -7,5 +7,5 @@ import java.util.List;
 public interface UserService {
     User getUserData(String username, String password);
 
-    List<Object> getAllUser();
+    List<User> getAllUser();
 }

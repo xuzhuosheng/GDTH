@@ -1,6 +1,7 @@
 package com.example.gdtheurekacomsumerweb.service;
 
 
+import com.example.gdtheurekacomsumerweb.entity.User;
 import com.example.gdtheurekacomsumerweb.service.impl.ProviderXtgnServiceImpl;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
@@ -20,8 +21,8 @@ public interface ProviderXtgnService {
 
 
     @RequestMapping(value = "/getUserData", method = RequestMethod.POST)
-    Map<String, Object> getUserData(@RequestParam("username") String username, @RequestParam("password") String password);
+    User getUserData(@RequestParam("username") String username, @RequestParam("password") String password);
 
     @RequestMapping(value = "getAllUser", method = RequestMethod.POST)
-    List<Object> getAllUser();
+    List<User> getAllUser();
 }

@@ -19,26 +19,21 @@ public class GdthEurekaComsumerWebController {
     UserService userService;
 
     @RequestMapping("/getUserData")
-    public Map<String, Object> getUserData(String username, String password) {
+    public User getUserData(String username, String password) {
         System.out.println(username + "---" + password);
-        Map<String, Object> map = new HashMap<>();
-        User user;
+        User user = new User();
         try {
             user = userService.getUserData(username, password);
-            map.put("user", user);
-            map.put("flag", "success");
-
         } catch (Exception e) {
+            System.out.println("getUserData is wrong");
             e.printStackTrace();
-            map.put("flag", "error");
-            map.put("errorMsg", "数据库访问出错！");
         }
-        return map;
+        return user;
     }
 
     @RequestMapping("getAllUser")
-    public List<Object> getAllUser() {
-        List<Object> dataList = new ArrayList<>();
+    public List<User> getAllUser() {
+        List<User> dataList = new ArrayList<>();
         try {
             dataList = userService.getAllUser();
         } catch (Exception e) {
