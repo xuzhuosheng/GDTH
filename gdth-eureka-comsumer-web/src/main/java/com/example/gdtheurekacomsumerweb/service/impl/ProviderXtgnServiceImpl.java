@@ -35,4 +35,11 @@ public class ProviderXtgnServiceImpl implements ProviderXtgnService {
         userList.add(user);
         return userList;
     }
+
+    @Override
+    public Map<String, String> insertUserData(String username, String truename, String sex, String email, String phone) {
+        Map<String, String> userMap = new HashMap<>();
+        userMap.put("flag", "error");
+        return userMap;
+    }
 }

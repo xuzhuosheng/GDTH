@@ -26,4 +26,9 @@ public class UserServiceImpl implements UserService {
         List<User> dataList = userDao.getAllUsers();
         return dataList;
     }
+
+    @Override
+    public void insertUserData(String username, String initPassword, String truename, String sex, String email, String phone) {
+        userDao.insertUserData(username, initPassword, truename, sex, email, phone);
+    }
 }

@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class UserController {
@@ -65,8 +66,39 @@ public class UserController {
         String sex = request.getParameter("sex");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
-        System.out.println(truename);
-        map.put("msg", "保存成功！");
+        try {
+            Map<String, String> userMap = providerXtgnService.insertUserData(username, truename, sex, email, phone);
+            if (!userMap.isEmpty()) {
+                if ("error".equals(userMap.get("flag"))) {
+                    map.put("msg", "保存失败！网络连接错误！");
+                } else {
+                    map.put("msg", "保存成功！");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            map.put("msg", "保存失败！" + e.getMessage());
+        }
+
+        return map;
+    }
+
+
+    @RequestMapping(value = "/updateUserZt", method = RequestMethod.POST)
+    @ResponseBody
+    public ModelMap updateUserZt(HttpServletRequest request) {
+        String id = request.getParameter("id");
+        String zt = request.getParameter("zt");
+        System.out.println(id);
+        System.out.println(zt);
+        ModelMap map = new ModelMap();
+        try {
+
+            map.put("flag", "success");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return map;
     }
 

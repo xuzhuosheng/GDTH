@@ -16,4 +16,12 @@
         select * from user
     </select>
 
+
+    <insert id="insertUserData">
+        insert into user
+        (account, email, password, sex, truename, phone, zt, createTime, modifyTime)values (
+        #{username},#{email},#{initPassword},#{sex},#{truename},#{phone},'1',now(),null
+        )
+
+    </insert>
 </mapper>

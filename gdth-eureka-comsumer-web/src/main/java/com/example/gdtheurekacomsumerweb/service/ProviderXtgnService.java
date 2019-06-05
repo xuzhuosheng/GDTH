@@ -23,6 +23,9 @@ public interface ProviderXtgnService {
     @RequestMapping(value = "/getUserData", method = RequestMethod.POST)
     User getUserData(@RequestParam("username") String username, @RequestParam("password") String password);
 
-    @RequestMapping(value = "getAllUser", method = RequestMethod.POST)
+    @RequestMapping(value = "/getAllUser", method = RequestMethod.POST)
     List<User> getAllUser();
+
+    @RequestMapping(value = "/insertUserData", method = RequestMethod.POST)
+    Map<String, String> insertUserData(@RequestParam("username") String username, @RequestParam("truename") String truename, @RequestParam("sex") String sex, @RequestParam("email") String email, @RequestParam("phone") String phone);
 }
