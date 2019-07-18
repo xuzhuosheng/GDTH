@@ -6,21 +6,29 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="demo" />
+        <module name="demoprovider" />
         <module name="gdth-eureka-comsumer-demo" />
         <module name="gdth-eureka-comsumer-web" />
+        <module name="gdth-eureka-producer-ywgn" />
         <module name="gdth-eureka-provider-demo" />
         <module name="gdth-eureka-provider-util" />
         <module name="gdth-eureka-provider-xtgn" />
+        <module name="gdth-eureka-provider-ywgn" />
         <module name="gdth-eureka-server" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="demo" target="1.8" />
+      <module name="demoprovider" target="1.8" />
       <module name="gdth-eureka-api" target="1.8" />
       <module name="gdth-eureka-comsumer-demo" target="1.8" />
       <module name="gdth-eureka-comsumer-web" target="1.8" />
+      <module name="gdth-eureka-producer-ywgn" target="1.8" />
       <module name="gdth-eureka-provider-demo" target="1.8" />
       <module name="gdth-eureka-provider-util" target="1.8" />
       <module name="gdth-eureka-provider-xtgn" target="1.8" />
+      <module name="gdth-eureka-provider-ywgn" target="1.8" />
       <module name="gdth-eureka-server" target="1.8" />
     </bytecodeTargetLevel>
   </component>

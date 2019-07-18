@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 
-@Repository("userService")
+@Repository ("userService")
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -28,7 +28,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void insertUserData(String username, String initPassword, String truename, String sex, String email, String phone) {
+    public void insertUserData(String username, String initPassword, String truename, String sex, String email,
+                               String phone) {
         userDao.insertUserData(username, initPassword, truename, sex, email, phone);
     }
 }

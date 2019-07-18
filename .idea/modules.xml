@@ -2,11 +2,14 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/demo/demo.iml" filepath="$PROJECT_DIR$/demo/demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/demoprovider/demoprovider.iml" filepath="$PROJECT_DIR$/demoprovider/demoprovider.iml" />
       <module fileurl="file://$PROJECT_DIR$/gdth-eureka-comsumer-demo/gdth-eureka-comsumer-demo.iml" filepath="$PROJECT_DIR$/gdth-eureka-comsumer-demo/gdth-eureka-comsumer-demo.iml" />
       <module fileurl="file://$PROJECT_DIR$/gdth-eureka-comsumer-web/gdth-eureka-comsumer-web.iml" filepath="$PROJECT_DIR$/gdth-eureka-comsumer-web/gdth-eureka-comsumer-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/gdth-eureka-provider-demo/gdth-eureka-provider-demo.iml" filepath="$PROJECT_DIR$/gdth-eureka-provider-demo/gdth-eureka-provider-demo.iml" />
       <module fileurl="file://$PROJECT_DIR$/gdth-eureka-provider-util/gdth-eureka-provider-util.iml" filepath="$PROJECT_DIR$/gdth-eureka-provider-util/gdth-eureka-provider-util.iml" />
       <module fileurl="file://$PROJECT_DIR$/gdth-eureka-provider-xtgn/gdth-eureka-provider-xtgn.iml" filepath="$PROJECT_DIR$/gdth-eureka-provider-xtgn/gdth-eureka-provider-xtgn.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gdth-eureka-provider-ywgn/gdth-eureka-provider-ywgn.iml" filepath="$PROJECT_DIR$/gdth-eureka-provider-ywgn/gdth-eureka-provider-ywgn.iml" />
       <module fileurl="file://$PROJECT_DIR$/gdth-eureka-server/gdth-eureka-server.iml" filepath="$PROJECT_DIR$/gdth-eureka-server/gdth-eureka-server.iml" />
     </modules>
   </component>
