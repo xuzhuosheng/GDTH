@@ -3,25 +3,18 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.gdtheurekaproviderywgn.dao.RjywglDao">
 
-    <!--<select id="getUserData" resultType="com.example.gdtheurekaproviderxtgn.entity.User">-->
-    <!--select * from user-->
-    <!--<where>-->
-    <!--1=1-->
-    <!--and account=#{username}-->
-    <!--and password=#{password}-->
-    <!--</where>-->
-    <!--</select>-->
-
-    <!--<select id="getAllUsers" resultType="com.example.gdtheurekaproviderxtgn.entity.User">-->
-    <!--select * from user-->
-    <!--</select>-->
+    <select id="getData" resultType="com.example.gdtheurekaproviderywgn.entity.Rjywgl">
+        select * from rjywgl
+        <where>
+            1=1
+        </where>
+    </select>
 
 
     <insert id="insertRjywjl">
         insert into rjywgl
         (type, title, content, scripttxt, creator, createtime, bz)
-          values (
-        #{type},#{title},#{content},#{scripttxt},#{creator},sysdate,#{bz}
-        )
+          values
+        (#{type},#{title},#{content},#{scripttxt},#{creator},now(),#{bz})
     </insert>
 </mapper>
