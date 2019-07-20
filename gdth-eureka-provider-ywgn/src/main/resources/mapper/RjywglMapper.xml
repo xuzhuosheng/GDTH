@@ -3,18 +3,39 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.gdtheurekaproviderywgn.dao.RjywglDao">
 
-    <select id="getData" resultType="com.example.gdtheurekaproviderywgn.entity.Rjywgl">
+    <select id="getData" resultType="com.example.gdtheurekaproviderywgn.entity.Rjywgl" parameterType="String">
         select * from rjywgl
         <where>
             1=1
+            <if test="searchContent!='' and searchContent!=null">
+                and(
+                title LIKE concat(concat('%', #{searchContent}), '%')
+                OR content LIKE concat(concat('%', #{searchContent}), '%')
+                OR bz LIKE concat(concat('%', #{searchContent}), '%')
+                OR scripttxt LIKE concat(concat('%', #{searchContent}), '%')
+                OR creator LIKE concat(concat('%', #{searchContent}), '%')
+                )
+            </if>
+            <if test="selectType!=0 and selectType!='' and selectType !=null">
+                and type =#{selectType}
+            </if>
         </where>
     </select>
 
 
     <insert id="insertRjywjl">
-        insert into rjywgl
-        (type, title, content, scripttxt, creator, createtime, bz)
-          values
-        (#{type},#{title},#{content},#{scripttxt},#{creator},now(),#{bz})
+        INSERT INTO rjywgl (
+            type,
+            title,
+            content,
+            scripttxt,
+            creator,
+            createtime,
+            bz
+        )
+        VALUES
+            (
+                #{type},#{title},#{content},#{scripttxt},#{creator},now(),#{bz}
+            )
     </insert>
 </mapper>

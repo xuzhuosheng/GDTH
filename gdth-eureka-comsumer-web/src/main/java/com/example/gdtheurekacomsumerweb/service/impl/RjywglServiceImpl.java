@@ -27,11 +27,18 @@ public class RjywglServiceImpl implements RjywglService {
     }
 
     @Override
-    public List<Rjywgl> getData() {
+    public List<Rjywgl> getData(String searchContent, String selectType) {
         dataList = new ArrayList<>();
         Rjywgl rjywgl = new Rjywgl();
         rjywgl.setBz("error");
         dataList.add(rjywgl);
         return dataList;
+    }
+
+    @Override
+    public Map<String, String> delRjywData(String ids) {
+        resultMap = new HashMap<>();
+        resultMap.put("flag", "error");
+        return resultMap;
     }
 }

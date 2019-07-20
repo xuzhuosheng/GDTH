@@ -21,25 +21,66 @@ import java.util.Map;
 @Controller
 public class RjywglController {
 
-    private ModelAndView view;
-
     @Autowired
     private RjywglService rjywglService;
 
+    private ModelAndView view;
+
+    private List<Rjywgl> dataList;
     private Map<String, String> resultMap;
+    private ModelMap map;
 
     @RequestMapping ("toRjywglIndex")
-    public ModelAndView toRjywglIndex(ModelMap map) {
+    public ModelAndView toRjywglIndex(ModelMap map, HttpServletRequest request) {
         view = new ModelAndView();
 
+        String searchContent = request.getParameter("searchContent");
+        String selectType = request.getParameter("selectType");
+
         try {
-            List<Rjywgl> dataList = new ArrayList<>();
-            dataList = rjywglService.getData();
+            dataList = new ArrayList<>();
+            dataList = rjywglService.getData(searchContent, selectType);
 
             if (dataList.size() > 0) {
                 if ("error".equals(dataList.get(0).getBz())) {
                     map.put("msg", "程序无法调度服务，请联系管理员！");
+                    view.setViewName("error");
                 } else if ("wrong".equals(dataList.get(0).getBz())) {
+                    map.put("msg", "数据库连接错误，请联系管理员！");
+                    view.setViewName("error");
+                } else {
+                    map.put("dataList", dataList);
+                    view.setViewName("ywgl/rj/rjyw_index");
+                }
+            } else {
+                map.put("dataList", dataList);
+                view.setViewName("ywgl/rj/rjyw_index");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return view;
+    }
+
+
+    @RequestMapping ("toRjywglSearch")
+    @ResponseBody
+    public ModelMap toRjywglSearch(HttpServletRequest request) {
+        ModelMap map = new ModelMap();
+
+        String searchContent = request.getParameter("searchContent");
+        String selectType = request.getParameter("selectType");
+
+        try {
+            dataList = new ArrayList<>();
+            dataList = rjywglService.getData(searchContent, selectType);
+
+            if (dataList.size() > 0) {
+                if ("error".equals(dataList.get(0).getBz())) {
+                    map.put("flag", "error");
+                    map.put("msg", "程序无法调度服务，请联系管理员！");
+                } else if ("wrong".equals(dataList.get(0).getBz())) {
+                    map.put("flag", "error");
                     map.put("msg", "数据库连接错误，请联系管理员！");
                 } else {
                     map.put("dataList", dataList);
@@ -50,12 +91,9 @@ public class RjywglController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        view.setViewName("ywgl/rj/rjyw_index");
-
-
-        return view;
+        return map;
     }
+
 
     @RequestMapping ("toRjywAdd")
     public ModelAndView toRjywAdd() {
@@ -100,30 +138,25 @@ public class RjywglController {
         return map;
     }
 
-//    @RequestMapping(value = "/doSaveUser", method = RequestMethod.POST)
-//    @ResponseBody
-//    public ModelMap doSaveUser(HttpServletRequest request) {
-//        ModelMap map = new ModelMap();
-//
-//        String username = request.getParameter("username");
-//        String truename = request.getParameter("truename");
-//        String sex = request.getParameter("sex");
-//        String email = request.getParameter("email");
-//        String phone = request.getParameter("phone");
-//        try {
-//            Map<String, String> userMap = providerXtgnService.insertUserData(username, truename, sex, email, phone);
-//            if (!userMap.isEmpty()) {
-//                if ("error".equals(userMap.get("flag"))) {
-//                    map.put("msg", "保存失败！网络连接错误！");
-//                } else {
-//                    map.put("msg", "保存成功！");
-//                }
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            map.put("msg", "保存失败！" + e.getMessage());
-//        }
-//
-//        return map;
-//    }
+
+    @RequestMapping (value = "toDelData", method = RequestMethod.POST)
+    @ResponseBody
+    public ModelMap toDelData(HttpServletRequest request) {
+        map = new ModelMap();
+        String ids = request.getParameter("ids");
+        try {
+            resultMap = new HashMap<>();
+            resultMap = rjywglService.delRjywData(ids);
+            if("error".equals(resultMap.get("flag")))
+            {
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return map;
+    }
+
+
 }

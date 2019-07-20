@@ -24,12 +24,12 @@ public class RjwglController {
 
 
     @RequestMapping ("getData")
-    public List<Rjywgl> getData() {
+    public List<Rjywgl> getData(String searchContent, String selectType) {
 
         try {
             dataList = new ArrayList<>();
 
-            dataList = rjywglService.getData();
+            dataList = rjywglService.getData(searchContent, selectType);
 
         } catch (Exception e) {
             e.printStackTrace();

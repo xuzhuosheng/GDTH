@@ -24,9 +24,9 @@ public class RjywglServiceImpl implements RjywglService {
     }
 
     @Override
-    public List<Rjywgl> getData() {
+    public List<Rjywgl> getData(String searchContent, String selectType) {
         dataList = new ArrayList<>();
-        dataList = rjywglDao.getData();
+        dataList = rjywglDao.getData(searchContent,selectType);
         return dataList;
     }
 }

@@ -2,6 +2,7 @@ package com.example.gdtheurekacomsumerweb.entity;
 
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Rjywgl {
 
@@ -11,7 +12,7 @@ public class Rjywgl {
     private String content;
     private String scripttxt;
     private String creator;
-    private Date createtime;
+    private Timestamp createtime;
     private String modify;
     private Date modifytime;
     private String bz;
@@ -64,11 +65,11 @@ public class Rjywgl {
         this.creator = creator;
     }
 
-    public Date getCreatetime() {
+    public Timestamp getCreatetime() {
         return createtime;
     }
 
-    public void setCreatetime(Date createtime) {
+    public void setCreatetime(Timestamp createtime) {
         this.createtime = createtime;
     }
 

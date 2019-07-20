@@ -23,5 +23,9 @@ public interface RjywglService {
                                    @RequestParam ("bz") String bz, @RequestParam ("creator") String creator);
 
     @RequestMapping (value = "getData", method = RequestMethod.POST)
-    List<Rjywgl> getData();
+    List<Rjywgl> getData(@RequestParam ("searchContent") String searchContent,
+                         @RequestParam ("selectType") String selectType);
+
+    @RequestMapping (value = "delRjywData", method = RequestMethod.POST)
+    Map<String, String> delRjywData(@RequestParam ("ids") String ids);
 }

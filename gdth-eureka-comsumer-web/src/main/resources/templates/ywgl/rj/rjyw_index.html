@@ -23,6 +23,7 @@
     <title>软件运维</title>
 </head>
 <body>
+<input type="text" th:value="${msg}" id="msgId" style="display: none"/>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
     <span class="c-gray en">&gt;</span>
     运维管理
@@ -34,23 +35,26 @@
             class="Hui-iconfont">&#xe68f;</i></a>
 </nav>
 <div class="page-container">
-    <div class="text-c">
-        <input type="text" class="input-text" id="" name="" style="width:150px" placeholder="输入查询内容">
-        &nbsp;
-        &nbsp;
-        系统模块:
-        <span class="select-box inline">
-		<select class="select" id="" name="">
-			<option value="0">选择一个系统</option>
+    <form method="post" id="search-form">
+        <div class="text-c">
+            <input type="text" class="input-text" id="searchContent" name="searchContent" style="width:150px"
+                   placeholder="输入查询内容">
+            &nbsp;
+            &nbsp;
+            系统模块:
+            <span class="select-box inline">
+		<select class="select" id="selectType" name="selectType">
+			<option value="0" selected>选择一个系统</option>
 			<option value="1">金三系统</option>
 			<option value="2">社保系统</option>
 		</select>
 		</span>
 
-
-        <button type="submit" class="btn btn-success radius" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜索
-        </button>
-    </div>
+            <button type="button" class="btn btn-success radius" id="" name="" onclick="_search()">
+                <i class="Hui-iconfont">&#xe665;</i> 搜索
+            </button>
+        </div>
+    </form>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
 		<span class="l">
 		    <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i
@@ -58,42 +62,43 @@
             <a href="javascript:;" onclick="rjyw_add('添加记录','toRjywAdd','','550')" class="btn btn-primary radius"><i
                     class="Hui-iconfont">&#xe600;</i> 添加</a>
 		</span>
-        <span class="r">共有数据：<strong th:utext="${dataList.size()}"><span></span></strong> 条</span>
+        <span class="r">共有数据：<strong th:utext="${dataList.size()}" id="totalNum"></strong> 条</span>
     </div>
     <div class="mt-20">
         <table class="table table-border table-bordered table-hover table-bg table-sort">
             <thead>
             <tr class="text-c">
                 <th width="25"><input type="checkbox" name="" value=""></th>
-                <!--<th width="80">ID</th>-->
+                <th width="80" style="display: none">ID</th>
                 <th>系统模块</th>
                 <th>标题</th>
                 <th>内容</th>
                 <th>脚本</th>
                 <th>创建人</th>
                 <th>创建时间</th>
-                <th>修改人</th>
-                <th>修改时间</th>
+                <!--<th>修改人</th>-->
+                <!--<th>修改时间</th>-->
                 <th>备注</th>
                 <th>操作</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="plan:${dataList}" class="text-c">
+            <tr th:each="plan:${dataList}" class="text-c" th:id="${plan.id}">
                 <td><input type="checkbox" th:value="${plan.id}" name=""></td>
+                <td th:text="${plan.id}" style="display: none" name="sid"></td>
                 <td th:text="${plan.type}==1?'金三':'社保'"></td>
-                <td th:text="${#strings.abbreviate(plan.title,10)}" th:title="${plan.title}"></td>
-                <td th:text="${#strings.abbreviate(plan.content,10)} " th:title="${plan.content}"></td>
-                <td th:text="${#strings.abbreviate(plan.scripttxt,10)}" th:title="${plan.scripttxt}"></td>
+                <td th:text="${#strings.abbreviate(plan.title,13)}" th:title="${plan.title}"></td>
+                <td th:text="${#strings.abbreviate(plan.content,13)} " th:title="${plan.content}"></td>
+                <td th:text="${#strings.abbreviate(plan.scripttxt,13)}" th:title="${plan.scripttxt}"></td>
                 <td th:text="${plan.creator}"></td>
-                <td th:text="${#dates.format(plan.createtime, 'yyyy-MM-dd hh:mm:ss')}"></td>
-                <td th:text="${plan.modify}"></td>
-                <td th:text="${#dates.format(plan.modifytime, 'yyyy-MM-dd hh:mm:ss')}"></td>
+                <td th:text="${#dates.format(plan.createtime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                <!--<td th:text="${plan.modify}"></td>-->
+                <!--<td th:text="${#dates.format(plan.modifytime, 'yyyy-MM-dd hh:mm:ss')}"></td>-->
                 <td th:text="${#strings.abbreviate(plan.bz,10)}" th:title="${plan.bz}"></td>
                 <td class="f-14"><a style="text-decoration:none"
-                                    onclick="system_data_edit('角色编辑','system-data-edit.html','0001','400','310')"
+                                    onclick="rjyw_edit('编辑','toRjywEdit',getId(this),'400','310')"
                                     href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>
-                    <a title="删除" href="javascript:;" onclick="system_data_del(this,'10001')" class="ml-5"
+                    <a title="删除" href="javascript:;" onclick="rjyw_del(getId(this))" class="ml-5"
                        style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
             </tr>
             </tbody>
@@ -113,16 +118,78 @@
 <script type="text/javascript" th:src="@{hui/lib/laypage/1.2/laypage.js}"></script>
 
 <script type="text/javascript">
-/*排序*/
+
+    function _search() {
+        var formData = $("#search-form").serialize();
+        $.ajax({
+                type: 'post',
+                data: formData,
+                url: 'toRjywglSearch',
+                success: function (data) {
+                    var d = eval(data);
+                    if (d.flag == 'error') {
+                        alert(d.msg);
+                        return;
+                    }
+                    var html = "";
+                    if (d.dataList.length > 0) {
+
+                        for (var i = 0; i < d.dataList.length; i++) {
+                            html += "<tr class='text-c'>";
+                            html += "<td><input type='checkbox' th:value='" + d.dataList[i].id + "' > </td>";
+                            html += "<td style='display: none'>" + d.dataList[i].id + "</td>";
+
+                            if (d.dataList[i].type == 1) {
+                                html += "<td>金三</td>";
+                            }
+                            if (d.dataList[i].type == 2) {
+                                html += "<td>社保</td>";
+                            }
+
+                            html += "<td   title= '" + d.dataList[i].title + "'>" + (d.dataList[i].title.length > 10 ? d.dataList[i].title.substring(0, 10) + "..." : d.dataList[i].title) + "</td>";
+                            html += "<td   title= '" + d.dataList[i].content + "'>" + (d.dataList[i].content.length > 10 ? d.dataList[i].content.substring(0, 10) + "..." : d.dataList[i].content) + "</td>";
+                            html += "<td   title= '" + d.dataList[i].scripttxt + "'>" + (d.dataList[i].scripttxt.length > 10 ? d.dataList[i].scripttxt.substring(0, 10) + "..." : d.dataList[i].scripttxt) + "</td>";
+                            html += "<td>" + d.dataList[i].creator + "</td>";
+                            html += "<td " + d.dataList[i].createtime + "</td>";
+                            html += "<td  title= '" + d.dataList[i].bz + "'>" + (d.dataList[i].bz.length > 10 ? d.dataList[i].bz.substring(0, 10) + "..." : d.dataList[i].bz.substring(0, 10)) + "</td>";
+                            html += "<td class='f-14'>";
+                            html += "<a style='text-decoration:none' onclick=\"rjyw_edit('编辑','toRjywEdit','" + d.dataList[i].id + "','400','310')\" ";
+                            html += " href='javascript:;' title='编辑'><i class='Hui-iconfont'>&#xe6df;</i></a>";
+                            html += "<a title='删除' href='javascript:;' onclick='rjyw_del(" + d.dataList[i].id + ")' class='ml-5'";
+                            html += "style='text-decoration:none'><i class='Hui-iconfont'>&#xe6e2;</i></a>";
+                            html += "</td>";
+                            html += "</tr>"
+                        }
+                    } else {
+                        html += "<tr class='text-c'>";
+                        html += "<td colspan='9'>没有数据 </td>";
+                        html += "</tr>"
+                    }
+
+                    $('table tbody').html('');
+                    $('table tbody').append(html);
+                    $("#totalNum").text(d.dataList.length);
+                }
+            }
+        )
+
+
+    }
+
+
+    /*排序*/
     $(function () {
         $('.table-sort').dataTable({
             "aaSorting": [1, "desc"],//默认第几个排序
             "bStateSave": true,//状态保存
+            "sInfo": false,
             "aoColumnDefs": [
                 {"orderable": false, "aTargets": [0, 8, 9]}// 制定列不参与排序
-            ]
-        });
+            ],
+            "searching": false,
+            "info": false
 
+        });
     });
 
     /*添加记录*/
@@ -130,95 +197,133 @@
         layer_show(title, url, w, h);
     }
 
-/*
-    /!*用户-添加*!/
-    function member_add(title, url, w, h) {
-        layer_show(title, url, w, h);
-    }
-
-    /!*用户-查看*!/
-    function member_show(title, url, id, w, h) {
-        layer_show(title, url, w, h);
-    }
-
-    /!*用户-停用*!/
-    function member_stop(obj) {
-        layer.confirm('确认要停用吗？', function (index) {
-            var id = obj.id;
-            $.ajax({
-                type: 'POST',
-                url: 'updateUserZt',
-                data: {id: id, zt: '0'},
-                success: function (data) {
-                    if (data.flag == "success") {
-                        $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_start(this,id)" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe6e1;</i></a>');
-                        $(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已停用</span>');
-                        $(obj).remove();
-                        layer.msg('已停用!', {icon: 5, time: 1000});
-                    }
-                },
-                error: function (data) {
-                    console.log(data.msg);
-                },
-            });
-        });
-    }
-
-    /!*用户-启用*!/
-    function member_start(obj, id) {
-        layer.confirm('确认要启用吗？', function (index) {
-            $.ajax({
-                type: 'POST',
-                url: 'updateUserZt',
-                data: {
-                    id: id,
-                    zt: '1'
-                },
-                success: function (data) {
-                    if (data.flag == "success") {
-                        $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_stop(this,id)" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>');
-                        $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
-                        $(obj).remove();
-                        layer.msg('已启用!', {icon: 6, time: 1000});
-                    }
-                }
-                ,
-                error: function (data) {
-                    console.log(data.msg);
-                }
-                ,
-            })
-            ;
-        });
+    function getId(obj) {
+        var id = obj.parentNode.parentNode.id;
+        return id;
     }
 
     /!*用户-编辑*!/
-    function member_edit(title, url, id, w, h) {
+
+    function rjyw_edit(title, url, id, w, h) {
+        // id = obj.parentNode.parentNode.id;
+        alert(id);
         layer_show(title, url, w, h);
     }
 
-    /!*密码-修改*!/
-    function change_password(title, url, id, w, h) {
-        layer_show(title, url, w, h);
-    }
 
     /!*用户-删除*!/
-    function member_del(obj, id) {
+
+    function rjyw_del(id) {
+        // var id = obj.parentNode.parentNode.id
         layer.confirm('确认要删除吗？', function (index) {
+            alert(id);
             $.ajax({
                 type: 'POST',
-                url: '',
+                url: 'toDelData',
                 dataType: 'json',
+                data: {id: id},
                 success: function (data) {
-                    $(obj).parents("tr").remove();
-                    layer.msg('已删除!', {icon: 1, time: 1000});
+                    var d=eval(data);
+                    alert(d.msg);
+                    // $(obj).parents("tr").remove();
+                    // layer.msg('已删除!', {icon: 1, time: 1000});
                 },
                 error: function (data) {
                     console.log(data.msg);
                 },
             });
         });
-    }*/
+    }
+
+    /*
+        /!*用户-添加*!/
+        function member_add(title, url, w, h) {
+            layer_show(title, url, w, h);
+        }
+
+        /!*用户-查看*!/
+        function member_show(title, url, id, w, h) {
+            layer_show(title, url, w, h);
+        }
+
+        /!*用户-停用*!/
+        function member_stop(obj) {
+            layer.confirm('确认要停用吗？', function (index) {
+                var id = obj.id;
+                $.ajax({
+                    type: 'POST',
+                    url: 'updateUserZt',
+                    data: {id: id, zt: '0'},
+                    success: function (data) {
+                        if (data.flag == "success") {
+                            $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_start(this,id)" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe6e1;</i></a>');
+                            $(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已停用</span>');
+                            $(obj).remove();
+                            layer.msg('已停用!', {icon: 5, time: 1000});
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data.msg);
+                    },
+                });
+            });
+        }
+
+        /!*用户-启用*!/
+        function member_start(obj, id) {
+            layer.confirm('确认要启用吗？', function (index) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'updateUserZt',
+                    data: {
+                        id: id,
+                        zt: '1'
+                    },
+                    success: function (data) {
+                        if (data.flag == "success") {
+                            $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_stop(this,id)" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>');
+                            $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
+                            $(obj).remove();
+                            layer.msg('已启用!', {icon: 6, time: 1000});
+                        }
+                    }
+                    ,
+                    error: function (data) {
+                        console.log(data.msg);
+                    }
+                    ,
+                })
+                ;
+            });
+        }
+
+        /!*用户-编辑*!/
+        function member_edit(title, url, id, w, h) {
+            layer_show(title, url, w, h);
+        }
+
+        /!*密码-修改*!/
+        function change_password(title, url, id, w, h) {
+            layer_show(title, url, w, h);
+        }
+
+        /!*用户-删除*!/
+        function member_del(obj, id) {
+            layer.confirm('确认要删除吗？', function (index) {
+                $.ajax({
+                    type: 'POST',
+                    url: '',
+                    dataType: 'json',
+                    success: function (data) {
+                        $(obj).parents("tr").remove();
+                        layer.msg('已删除!', {icon: 1, time: 1000});
+                    },
+                    error: function (data) {
+                        console.log(data.msg);
+                    },
+                });
+            });
+        }*/
 </script>
 </body>
 </html>

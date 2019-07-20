@@ -12,5 +12,5 @@ public interface RjywglDao {
                       @Param ("scripttxt") String scripttxt, @Param ("bz") String bz,
                       @Param ("creator") String creator);
 
-    List<Rjywgl> getData();
+    List<Rjywgl> getData(@Param ("searchContent") String searchContent, @Param ("selectType") String selectType);
 }
